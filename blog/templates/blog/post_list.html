@@ -1,0 +1,103 @@
+<!-- this html pass code to base.html and render  -->
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- below here we are using a template from models.py -->
+<!-- posts is an object, and we use for loop to go through the list of articles -->
+
+<!--- Image Slider -->
+<div id="slides" class="carousel slide" data-ride="carousel">
+	<ul class="carousel-indicators">
+			<li data-target="#slides" data-slide-to="0" class="active"> </li>
+			<li data-target="#slides" data-slide-to="1"> </li>
+</ul>
+	<div class="carousel-inner">
+		<div class="carousel-item active">
+			<img src={% static 'img/evanston1.png' %}>
+			<div class="carousel-caption">
+				<h1 class="display-2">Evanston Dentists</h1><
+				<h3>Affordable and best dentists in the Evanston, IL area</h3>
+			</div>
+		</div>
+		<div class="carousel-item">
+			<img src={% static 'img/Evanston2.png' %}>
+		</div>
+	</div>
+</div>
+
+
+<!--- Meet the team -->
+<div class="container-fluid padding">
+	<div class="row welcome text-center">
+		<div class="col-12">
+			<h1 class="display-4">Top 4 dentists in Evanston, IL</h1>
+		</div>
+		<hr>
+	</div>
+</div>
+
+<!--- Cards -->
+<div class="container-fluid padding">
+	<div class="row padding">
+		<div class="col-md-4">
+			<div class="card">
+				<img class="card-img-top" src={% static 'img/DrDong.png' %}>
+				<div class="card-body">
+					<h4 class="card-title">Dr. James Dong </h4>
+					<p class="card-text">Dr. Dong's service is known for being reasonably price with excellent quality. With over 30 years of experiences, Dr. Dong has treated hundreds of his happy patients. Dr. Dong currenlty practices independently at his dental office in the Carlson building.</p>
+					<a href="#" class="btn btn-outline-secondary">See More</a>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="col-md-4">
+			<div class="card">
+				<img class="card-img-top" src={% static 'img/RadiantSmile.png' %}>
+				<div class="card-body">
+					<h4 class="card-title">The Radiant Smile</h4>
+					<p class="card-text">Looking to see a dentist in downtown? Dr. Basko and Dr. Chen of the Radiant Smile, graduates of Northwestern University, are known for providing excellent service. Each has served over 6,000 happy patients over the years.</p>
+					<a href="#" class="btn btn-outline-secondary">See More</a>
+				</div>
+			</div>
+		</div>
+
+			<div class="col-md-4">
+				<div class="card">
+					<img class="card-img-top" src={% static 'img/FamilyDentalAssociates.png' %}>
+					<div class="card-body">
+						<h4 class="card-title">Dr. Curry at the Evanston Family Dental Associates</h4>
+						<p class="card-text">If you are looking for a kind and gentle professional, consider Evanston Family Dental Associates. Hundreds of patients swear byt he service provided by Dr. Kathleen Curry. Say Root-canal, annual dental checkup, or x-rays, they have it all here!</p>
+						<a href="#" class="btn btn-outline-secondary">See More</a>
+					</div>
+				</div>
+			</div>
+</div>
+
+
+<!-- original from DJANGOGIRLS -->
+<div class="content container">
+  <div class="row">
+    <div class="col-md-8">
+    {% for post in posts %}
+      <div class="post">
+          <div class="date">
+            <!-- Double brackets means we are accessing data in each of the fields defined in our Post model -->
+            <p>published: {{ post.published_date }}</p>
+          </div>
+          <!--  Below, linking a post's title in the post list to the post's detail page -->
+          <!-- % in brackets means using Django template tags, to create a url -->
+          <!-- 'post_detail' means that Django will be expecting a URL in blog/urls.py with name=post_detail -->
+          <!-- Access the primary key, uniquely created for each record in database, by writing post.pk -->
+          <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+          <!-- convert line break into paragraph -->
+          <p>{{ post.text|linebreaksbr }}</p>
+          <hr>
+      </div>
+    {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

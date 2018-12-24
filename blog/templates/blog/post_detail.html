@@ -1,0 +1,17 @@
+<!-- extending base.html so we can display a post's published_date (if it exists), title and text -->
+{% extends 'blog/base.html' %}
+
+
+{% block content %}
+    <div class="post">
+
+        <!-- checking if a post's published_date is not empty. -->
+        {% if post.published_date %}
+            <div class="date">
+                {{ post.published_date }}
+            </div>
+        {% endif %}
+        <h2>{{ post.title }}</h2>
+        <p>{{ post.text|linebreaksbr }}</p>
+    </div>
+{% endblock %}
